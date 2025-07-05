@@ -31,20 +31,11 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
     
-    - name: Install Ollama
+    - name: Set test environment variables
       run: |
-        curl -fsSL https://ollama.ai/install.sh | sudo -E sh
-        
-    - name: Start Ollama service
-      run: |
-        ollama serve &
-        sleep 5
-        
-    - name: Pull required models
-      run: |
-        ollama pull deepseek-coder:33b || echo "Model pull failed - continuing"
-        ollama pull mixtral:8x7b || echo "Model pull failed - continuing"
-        ollama pull codellama:34b || echo "Model pull failed - continuing"
+        echo "OLLAMA_BASE_URL=http://localhost:11434" >> $GITHUB_ENV
+        echo "SKIP_OLLAMA_TESTS=true" >> $GITHUB_ENV
+        echo "CI_ENVIRONMENT=true" >> $GITHUB_ENV
     
     - name: Set up test environment
       env:

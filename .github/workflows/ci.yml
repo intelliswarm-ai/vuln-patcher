@@ -26,6 +26,14 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Free up disk space
+      run: |
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /opt/ghc
+        sudo rm -rf "/usr/local/share/boost"
+        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+        df -h
+        
     - name: Checkout code
       uses: actions/checkout@v4
       with:
@@ -141,6 +149,14 @@ jobs:
         java: [17, 21]
     
     steps:
+    - name: Free up disk space
+      run: |
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /opt/ghc
+        sudo rm -rf "/usr/local/share/boost"
+        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+        df -h
+        
     - name: Checkout code
       uses: actions/checkout@v4
     
@@ -151,16 +167,11 @@ jobs:
         distribution: 'temurin'
         cache: maven
     
-    - name: Set up Ollama
+    - name: Set environment for tests
       run: |
-        curl -fsSL https://ollama.ai/install.sh | sh || echo "Ollama installation failed"
-        ollama serve &
-        sleep 10
-        # Pull required models (optional for CI)
-        ollama pull deepseek-coder:33b || echo "Model pull failed - continuing"
-        ollama pull mixtral:8x7b || echo "Model pull failed - continuing"  
-        ollama pull codellama:34b || echo "Model pull failed - continuing"
-      continue-on-error: true
+        echo "OLLAMA_BASE_URL=http://localhost:11434" >> $GITHUB_ENV
+        echo "SKIP_OLLAMA_TESTS=true" >> $GITHUB_ENV
+        echo "CI_ENVIRONMENT=true" >> $GITHUB_ENV
     
     - name: Build with Maven
       run: mvn clean compile

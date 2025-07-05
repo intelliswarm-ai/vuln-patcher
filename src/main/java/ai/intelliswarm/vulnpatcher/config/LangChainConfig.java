@@ -23,6 +23,12 @@ public class LangChainConfig {
     @ConfigProperty(name = "ollama.timeout", defaultValue = "60s")
     Duration timeout;
     
+    @ConfigProperty(name = "ci.environment", defaultValue = "false")
+    boolean ciEnvironment;
+    
+    @ConfigProperty(name = "skip.ollama.tests", defaultValue = "false")
+    boolean skipOllamaTests;
+    
     @Produces
     @Named("orchestratorModel")
     @ApplicationScoped
