@@ -30,6 +30,19 @@ public class MetricsConfig {
             registry.counter("vulnpatcher.vulnerabilities.found").increment(count);
         }
         
+        public void incrementVulnerabilitiesDetected() {
+            registry.counter("vulnpatcher.vulnerabilities.detected").increment();
+        }
+        
+        public void incrementApiCallErrors(String sourceName) {
+            registry.counter("vulnpatcher.api.errors", "source", sourceName).increment();
+        }
+        
+        public void recordApiCallDuration(String sourceName, long durationMs) {
+            registry.timer("vulnpatcher.api.duration", "source", sourceName)
+                    .record(durationMs, TimeUnit.MILLISECONDS);
+        }
+        
         public void incrementPullRequestsCreated() {
             registry.counter("vulnpatcher.pullrequests.created").increment();
         }

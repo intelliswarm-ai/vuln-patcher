@@ -41,26 +41,19 @@ jobs:
         restore-keys: ${{ runner.os }}-sonar
     
     - name: Run SpotBugs
-      run: |
-        cd vuln-patcher
-        mvn com.github.spotbugs:spotbugs-maven-plugin:4.8.1.0:spotbugs
+      run: mvn com.github.spotbugs:spotbugs-maven-plugin:4.8.1.0:spotbugs
     
     - name: Run PMD
-      run: |
-        cd vuln-patcher
-        mvn pmd:pmd pmd:cpd
+      run: mvn pmd:pmd pmd:cpd
     
     - name: Run Checkstyle
-      run: |
-        cd vuln-patcher
-        mvn checkstyle:checkstyle
+      run: mvn checkstyle:checkstyle
     
     - name: SonarCloud Scan
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        cd vuln-patcher
         mvn verify sonar:sonar \
           -Dsonar.projectKey=intelliswarm_vuln-patcher \
           -Dsonar.organization=intelliswarm \
@@ -72,9 +65,9 @@ jobs:
       with:
         name: analysis-reports
         path: |
-          vuln-patcher/target/spotbugs/
-          vuln-patcher/target/pmd/
-          vuln-patcher/target/checkstyle-result.xml
+          target/spotbugs/
+          target/pmd/
+          target/checkstyle-result.xml
 
   # Security vulnerability scanning
   security-scan:
@@ -89,7 +82,7 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
         scan-type: 'fs'
-        scan-ref: 'vuln-patcher'
+        scan-ref: '.'
         format: 'sarif'
         output: 'trivy-results.sarif'
         severity: 'CRITICAL,HIGH,MEDIUM'
@@ -103,7 +96,7 @@ jobs:
       uses: dependency-check/Dependency-Check_Action@main
       with:
         project: 'vuln-patcher'
-        path: './vuln-patcher'
+        path: '.'
         format: 'HTML'
         args: >
           --enableRetired
@@ -147,32 +140,26 @@ jobs:
         ollama pull codellama:34b
     
     - name: Build with Maven
-      run: |
-        cd vuln-patcher
-        mvn clean compile
+      run: mvn clean compile
     
     - name: Run unit tests
-      run: |
-        cd vuln-patcher
-        mvn test
+      run: mvn test
     
     - name: Run integration tests
-      run: |
-        cd vuln-patcher
-        mvn verify -Pit
+      run: mvn verify -Pit
     
     - name: Generate test report
       uses: dorny/test-reporter@v1
       if: success() || failure()
       with:
         name: Maven Tests - Java ${{ matrix.java }}
-        path: vuln-patcher/target/surefire-reports/*.xml
+        path: target/surefire-reports/*.xml
         reporter: java-junit
     
     - name: Upload test coverage to Codecov
       uses: codecov/codecov-action@v4
       with:
-        directory: ./vuln-patcher/target/site/jacoco/
+        directory: ./target/site/jacoco/
         flags: unittests
         name: codecov-umbrella
         fail_ci_if_error: true
@@ -197,14 +184,10 @@ jobs:
         cache: maven
     
     - name: Build native executable
-      run: |
-        cd vuln-patcher
-        mvn package -Pnative -DskipTests
+      run: mvn package -Pnative -DskipTests
     
     - name: Test native executable
-      run: |
-        cd vuln-patcher
-        ./target/vuln-patcher-1.0.0-SNAPSHOT-runner --version
+      run: ./target/vuln-patcher-1.0.0-SNAPSHOT-runner --version
 
   # Container build and scan
   container-build:
@@ -224,9 +207,7 @@ jobs:
         cache: maven
     
     - name: Build JAR
-      run: |
-        cd vuln-patcher
-        mvn package -DskipTests
+      run: mvn package -DskipTests
     
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
@@ -234,8 +215,8 @@ jobs:
     - name: Build container image
       uses: docker/build-push-action@v5
       with:
-        context: ./vuln-patcher
-        file: ./vuln-patcher/src/main/docker/Dockerfile.jvm
+        context: .
+        file: ./src/main/docker/Dockerfile.jvm
         push: false
         tags: vuln-patcher:${{ github.sha }}
         cache-from: type=gha
@@ -273,7 +254,6 @@ jobs:
     
     - name: Run JMH benchmarks
       run: |
-        cd vuln-patcher
         mvn clean compile
         mvn exec:java -Dexec.mainClass="ai.intelliswarm.vulnpatcher.benchmarks.BenchmarkRunner"
     
@@ -281,7 +261,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: jmh-benchmark-results
-        path: vuln-patcher/target/jmh-results.json
+        path: target/jmh-results.json
 
   # Release
   release:
@@ -303,7 +283,6 @@ jobs:
     
     - name: Build release artifacts
       run: |
-        cd vuln-patcher
         mvn clean package -DskipTests
         mvn package -Pnative -DskipTests
     
