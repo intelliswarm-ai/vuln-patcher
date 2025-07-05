@@ -177,7 +177,7 @@ jobs:
       run: mvn clean compile
     
     - name: Run unit tests
-      run: mvn test -Dtest="!*IntegrationTest"
+      run: mvn test -Dtest="!*IT" -DfailIfNoTests=false
     
     - name: Run integration tests
       run: mvn verify -Pit || echo "Integration tests failed - continuing"

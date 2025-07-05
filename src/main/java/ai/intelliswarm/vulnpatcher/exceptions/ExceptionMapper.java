@@ -17,8 +17,8 @@ public class ExceptionMapper {
 
     public RestResponse<ErrorResponse> mapVulnPatcherException(VulnPatcherException exception) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.errorCode = exception.getErrorCode() != null ? 
-            Integer.parseInt(exception.getErrorCode().replace("VPS", "")) : 9001;
+        errorResponse.errorCode = exception.getErrorCodeEnum() != null ? 
+            exception.getErrorCodeEnum().getCode() : 9001;
         errorResponse.message = exception.getMessage();
         errorResponse.details = exception.getDetails();
         errorResponse.timestamp = LocalDateTime.now().toString();

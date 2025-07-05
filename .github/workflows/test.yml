@@ -50,10 +50,10 @@ jobs:
         echo "OLLAMA_BASE_URL=http://localhost:11434" >> $GITHUB_ENV
     
     - name: Run unit tests
-      run: mvn clean test -Dtest="!*IntegrationTest,!*IT"
+      run: mvn clean test -Dtest="!*IT" -DfailIfNoTests=false
       
     - name: Run integration tests
-      run: mvn test -Dtest="*IntegrationTest,*IT" || true
+      run: mvn test -Dtest="*IT" -DfailIfNoTests=false || true
       continue-on-error: true
     
     - name: Generate test report

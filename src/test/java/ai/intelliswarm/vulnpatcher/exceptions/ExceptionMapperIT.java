@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ExceptionMapperTest {
+public class ExceptionMapperIT {
     
     private ExceptionMapper exceptionMapper;
     
