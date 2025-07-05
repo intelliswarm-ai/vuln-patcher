@@ -29,7 +29,15 @@ public class PullRequestService {
                 String body = buildPullRequestBody(workflowResult);
                 
                 // Create the PR using git provider
-                String prUrl = gitProvider.createPullRequest(repositoryUrl, branchName, title, body);
+                GitProvider.PullRequestRequest prRequest = new GitProvider.PullRequestRequest();
+                prRequest.setRepositoryUrl(repositoryUrl);
+                prRequest.setTitle(title);
+                prRequest.setDescription(body);
+                prRequest.setSourceBranch(branchName);
+                prRequest.setTargetBranch("main");
+                
+                GitProvider.PullRequestResult prResult = gitProvider.createPullRequest(prRequest).join();
+                String prUrl = prResult.getUrl();
                 
                 PullRequestResult result = new PullRequestResult();
                 result.setPullRequestUrl(prUrl);

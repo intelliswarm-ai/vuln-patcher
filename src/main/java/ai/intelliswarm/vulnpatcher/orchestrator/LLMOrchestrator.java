@@ -152,8 +152,7 @@ public class LLMOrchestrator {
             ))
         );
         
-        AiMessage response = orchestratorModel.generate(messages);
-        return response.text();
+        return orchestratorModel.generate(messages).content().text();
     }
     
     private String buildConsensus(String fix, String review, String validation) {
@@ -168,8 +167,7 @@ public class LLMOrchestrator {
             ))
         );
         
-        AiMessage response = orchestratorModel.generate(messages);
-        return response.text();
+        return orchestratorModel.generate(messages).content().text();
     }
     
     private double calculateConfidence(WorkflowState state) {

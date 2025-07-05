@@ -25,6 +25,13 @@ public class ScanResult {
         private String matchType;
         private List<String> indicators;
         
+        public enum MatchType {
+            DEPENDENCY_VERSION,
+            CODE_PATTERN,
+            SEMANTIC_ANALYSIS,
+            MANUAL_REVIEW
+        }
+        
         // Getters and setters
         public Vulnerability getVulnerability() { return vulnerability; }
         public void setVulnerability(Vulnerability vulnerability) { this.vulnerability = vulnerability; }
