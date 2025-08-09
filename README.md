@@ -41,40 +41,40 @@ VulnPatcher is an enterprise-grade, AI-powered vulnerability detection and autom
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        VulnPatcher System                        │
+│                        VulnPatcher System                       │
 ├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌──────────────┐  ┌──────────────┐  ┌────────────────┐       │
-│  │ Vulnerability│  │     Git      │  │   Multi-Agent  │       │
-│  │   Sources    │  │  Providers   │  │  AI Orchestra  │       │
-│  ├──────────────┤  ├──────────────┤  ├────────────────┤       │
-│  │ • CVE        │  │ • GitHub     │  │ • Security Eng │       │
-│  │ • GHSA       │  │ • GitLab     │  │ • Tech Lead    │       │
-│  │ • OSV        │  │ • Bitbucket  │  │ • Security Exp │       │
-│  │ • SNYK       │  │              │  │                │       │
-│  │ • OSS-Index  │  │              │  │                │       │
-│  │ • OVAL       │  │              │  │                │       │
-│  └──────────────┘  └──────────────┘  └────────────────┘       │
+│                                                                 │
+│  ┌──────────────┐  ┌──────────────┐  ┌────────────────┐         │
+│  │ Vulnerability│  │     Git      │  │   Multi-Agent  │         │
+│  │   Sources    │  │  Providers   │  │  AI Orchestra  │         │
+│  ├──────────────┤  ├──────────────┤  ├────────────────┤         │
+│  │ • CVE        │  │ • GitHub     │  │ • Security Eng │         │
+│  │ • GHSA       │  │ • GitLab     │  │ • Tech Lead    │         │
+│  │ • OSV        │  │ • Bitbucket  │  │ • Security Exp │         │
+│  │ • SNYK       │  │              │  │                │         │
+│  │ • OSS-Index  │  │              │  │                │         │
+│  │ • OVAL       │  │              │  │                │         │
+│  └──────────────┘  └──────────────┘  └────────────────┘         │
 │         │                  │                   │                │
 │         ▼                  ▼                   ▼                │
-│  ┌─────────────────────────────────────────────────────┐       │
-│  │           Core Detection & Fix Engine                │       │
-│  ├─────────────────────────────────────────────────────┤       │
-│  │ • Vulnerability Matcher                              │       │
-│  │ • Context Manager (Chunking & Embeddings)          │       │
-│  │ • Fix Generator (Multi-Strategy)                    │       │
-│  │ • Validation Engine                                 │       │
-│  └─────────────────────────────────────────────────────┘       │
+│  ┌─────────────────────────────────────────────────────┐        │
+│  │           Core Detection & Fix Engine               │        │
+│  ├─────────────────────────────────────────────────────┤        │
+│  │ • Vulnerability Matcher                             │        │
+│  │ • Context Manager (Chunking & Embeddings)           │        │
+│  │ • Fix Generator (Multi-Strategy)                    │        │
+│  │ • Validation Engine                                 │        │
+│  └─────────────────────────────────────────────────────┘        │
 │                            │                                    │
 │                            ▼                                    │
-│  ┌─────────────────────────────────────────────────────┐       │
-│  │              API & Monitoring Layer                  │       │
-│  ├─────────────────────────────────────────────────────┤       │
-│  │ • RESTful API    • Metrics (Prometheus)            │       │
-│  │ • SSE Streaming  • Health Checks                   │       │
-│  │ • OpenAPI Docs   • Distributed Tracing             │       │
-│  └─────────────────────────────────────────────────────┘       │
-│                                                                  │
+│  ┌─────────────────────────────────────────────────────┐        │
+│  │              API & Monitoring Layer                 │        │
+│  ├─────────────────────────────────────────────────────┤        │
+│  │ • RESTful API    • Metrics (Prometheus)             │        │
+│  │ • SSE Streaming  • Health Checks                    │        │
+│  │ • OpenAPI Docs   • Distributed Tracing              │        │
+│  └─────────────────────────────────────────────────────┘        │
+│                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
